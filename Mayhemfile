@@ -1,0 +1,5 @@
+project: mavlink
+target: fuzzme
+
+cmds:
+  - cmd: /fuzzme
