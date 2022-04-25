@@ -1,5 +1,5 @@
 project: mavlink
-target: fuzzme
+target: mavlink_message_parser
 
 cmds:
-  - cmd: /fuzzme
+  - cmd: /fuzz_assembled_message
