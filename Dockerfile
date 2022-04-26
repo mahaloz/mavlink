@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.04 as builder
 
 USER root 
 RUN apt-get update && apt-get install -y sudo sshfs bsdutils python-dev python-pip \
@@ -17,3 +17,7 @@ RUN cd /mavlink && git submodule update --init --recursive && cd .. \
 # build the target
 RUN cp /mavlink/tests/fuzz_assembled_message.cpp / && \
     clang++ -I generated/include/mavlink/v2.0 -fsanitize=fuzzer,address,undefined fuzz_assembled_message.cpp -o fuzz_assembled_message
+    
+FROM ubuntu:18.04
+
+COPY --from=builder /fuzz_assembled_message /
